@@ -6,5 +6,5 @@ to what I want it to be. So, in short; don't use it unless you have the exact sa
 Contains:
 
 * scala 2.10.6
-* sbt 0.13.12
+* sbt 0.13.13
 * some caching garbage
