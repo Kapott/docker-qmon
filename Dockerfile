@@ -1,34 +1,16 @@
-#
-# Scala and sbt Dockerfile
-#
-# https://github.com/hseeberger/scala-sbt
-#
+# This Dockerfile has two required ARGs to determine which base image
+# to use for the JDK and which sbt version to install.
 
-# Pull base image
-FROM openjdk:11.0.1-jdk
+ARG OPENJDK_TAG=8u181
+FROM openjdk:${OPENJDK_TAG}
 
-# Env variables
-ENV SCALA_VERSION 2.11.8
-ENV SBT_VERSION 0.13.13
-
-# Scala expects this file
-RUN touch /usr/lib/jvm/java-11-openjdk-amd64/release
-
-# Install Scala
-## Piping curl directly in tar
-RUN \
-curl -fsL https://downloads.typesafe.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /root/ && \
-echo >> /root/.bashrc && \
-echo "export PATH=~/scala-$SCALA_VERSION/bin:$PATH" >> /root/.bashrc
+ARG SBT_VERSION=1.2.7
 
 # Install sbt
 RUN \
-curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
-dpkg -i sbt-$SBT_VERSION.deb && \
-rm sbt-$SBT_VERSION.deb && \
-apt-get update && \
-apt-get install sbt -y && \
-sbt sbtVersion
-
-# Define working directory
-WORKDIR /root
+  curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
+  dpkg -i sbt-$SBT_VERSION.deb && \
+  rm sbt-$SBT_VERSION.deb && \
+  apt-get update && \
+  apt-get install sbt && \
+  sbt sbtVersion

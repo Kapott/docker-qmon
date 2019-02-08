@@ -1,10 +1,9 @@
-# Project specific Scala/SBT docker image
+# Docker qmon base image
 
-This docker image is tied very specifically to a project I'm currently cleaning up. The image isn't small, neat, fast or anywhere near
-to what I want it to be. So, in short; don't use it unless you have the exact same requirements as I do.
+This base image is a specific OpenJDK and SBT build, adjusted to match
+the versions of the currently running qmon tool.
 
-Contains:
+It is a fork of [https://github.com/mozilla/docker-sbt](mozilla/docker-sbt)
 
-* scala 2.10.6
-* sbt 0.13.13
-* some caching garbage
+The current `build.sh` file contains variables which can be changed in order
+to build another combination of OpenJDK/SBT (as per the mozilla instructions)
